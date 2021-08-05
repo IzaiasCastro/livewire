@@ -22,13 +22,13 @@ class UploadPhoto extends Component
             'photo' => 'required|image|max:1024'
         ]);
 
-        $user = auth()->user()->name;
+        $user = auth()->user();
 
-        $nameFile = Str::slug( $user ) . '.' . $this->photo->getClientOriginalExtension();
+        $nameFile = Str::slug($user->name) . '.' . $this->photo->getClientOriginalExtension();
 
-        if($path = $this->photo->storeAs('users', $nameFile)) {
+        if ($path = $this->photo->storeAs('users', $nameFile)) {
             $user->update([
-                'profile_photo_path' => $path
+                'profile_photo_path' => $path,
             ]);
         }
 
